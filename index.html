@@ -154,6 +154,23 @@ img:not(.ld){background:linear-gradient(100deg,#ECEBE7 30%,#F6F6F4 50%,#ECEBE7 7
 .reel-pad.fail::before{content:"не удалось загрузить демо"}
 @media (max-width:600px){.reel-pad{aspect-ratio:4/5}}
 
+
+.slide .box .vid.land{top:0;left:0;width:100%;height:100%;aspect-ratio:auto;transform:none;border-radius:inherit}
+/* проект в разработке */
+.wip-case{cursor:default}
+.wip{background:var(--surface)}
+.wip-bg{position:absolute;inset:-40%;background:repeating-linear-gradient(135deg,transparent 0 22px,rgba(23,22,20,.045) 22px 44px);opacity:0;transition:opacity .5s var(--ease)}
+.wip-tag{position:absolute;left:50%;top:50%;display:flex;align-items:center;gap:10px;height:44px;padding:0 20px 0 16px;border-radius:999px;background:var(--ink);color:#fff;font-family:var(--accent);font-weight:500;font-size:var(--fs-s);white-space:nowrap;
+  opacity:0;transform:translate(-50%,-30%) scale(.92);filter:blur(4px);transition:opacity .45s var(--ease),transform .55s var(--ease),filter .45s var(--ease)}
+.wip-tag i{width:8px;height:8px;border-radius:50%;background:#FF4600;animation:wipPulse 1.2s ease-in-out infinite}
+@keyframes wipPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+@keyframes wipMove{to{transform:translate(62px,62px)}}
+.wip-case:hover .wip-bg,.wip-case:focus-visible .wip-bg{opacity:1;animation:wipMove 2.4s linear infinite}
+.wip-case:hover .wip-tag,.wip-case:focus-visible .wip-tag{opacity:1;transform:translate(-50%,-50%);filter:none}
+@media (hover:none){.wip-bg{opacity:1;animation:wipMove 2.4s linear infinite}.wip-tag{opacity:1;transform:translate(-50%,-50%);filter:none}}
+@media (prefers-reduced-motion:reduce){.wip-bg,.wip-tag i{animation:none!important}}
+.case[data-vid],.case[data-url]{cursor:pointer}
+
 /* Рекорд кормления */
 .rec{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-family:var(--accent);font-size:var(--fs-xs);color:var(--ink-5);min-height:1.4em;margin-top:-8px}
 .rec b{font-weight:500;color:var(--ink);overflow-wrap:anywhere}
@@ -179,11 +196,16 @@ img:not(.ld){background:linear-gradient(100deg,#ECEBE7 30%,#F6F6F4 50%,#ECEBE7 7
 .slide{cursor:pointer}
 .cm{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100vw;height:100dvh;margin:0;overflow:hidden;color:var(--ink)}
 .cm::backdrop{background:rgba(247,247,246,.82);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-.cm[open]{display:grid;place-items:center;animation:cmIn .45s var(--ease)}
+.cm[open]{display:grid;place-items:center}
+.cm[open] .cm-in{animation:cmUp .65s var(--ease)}
+.cm[open] .cm-x{animation:cmBd .5s var(--ease)}
 .cm[open]::backdrop{animation:cmBd .45s var(--ease)}
-.cm.out{animation:cmOut .22s ease forwards}
-@keyframes cmIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
-@keyframes cmOut{to{opacity:0;transform:translateY(10px) scale(.98)}}
+.cm.out .cm-in{animation:cmDown .4s cubic-bezier(.5,0,.75,0) forwards}
+.cm.out .cm-x{opacity:0;transition:opacity .2s}
+.cm.out::backdrop{animation:cmBdOut .4s ease forwards}
+@keyframes cmUp{from{transform:translateY(105dvh)}to{transform:none}}
+@keyframes cmBdOut{to{opacity:0}}
+@keyframes cmDown{to{transform:translateY(105dvh)}}
 @keyframes cmBd{from{opacity:0}to{opacity:1}}
 .cm-in{display:flex;flex-direction:column;align-items:center;max-width:96vw}
 .cm-stage{position:relative;width:min(96vw,calc(97dvh*780/1688),560px);aspect-ratio:780/1688;border-radius:var(--r-tile);overflow:hidden;background:var(--surface)}
@@ -407,8 +429,8 @@ html.muted .tri i{background:var(--ink-5)}
 
   <article class="proj">
     <div class="meta"><span class="name">Dealflow <span>/ продуктовый дизайн</span></span><div class="tags"><span class="tag">web</span><span class="tag dark">b2b</span></div></div>
-    <a class="case" href="#">
-      <div class="pad"></div>
+    <a class="case wip-case" href="#" aria-label="Проект в разработке">
+      <div class="pad wip"><div class="wip-bg"></div><span class="wip-tag"><i></i>в разработке</span></div>
       <div class="cap"><span class="t">CRM для отдела B2B-продаж</span><span class="d">Канбан сделок, карточка клиента и напоминания — чтобы сделки не терялись между этапами.</span></div>
     </a>
   </article>
@@ -430,42 +452,18 @@ html.muted .tri i{background:var(--ink-5)}
   </article>
 
   <article class="proj">
-    <div class="meta"><span class="name">CARE <span>/ лендинг</span></span><div class="tags"><span class="tag">web</span></div></div>
-    <a class="case" href="#">
-      <div class="pad"></div>
-      <div class="cap"><span class="t">Премиальный уход за одеждой</span><span class="d">Химчистка как цифровой сервис: забор, уход и возврат в одном сценарии.</span></div>
-    </a>
-  </article>
-
-  <article class="proj">
-    <div class="meta"><span class="name">INDEX <span>/ веб-продукт</span></span><div class="tags"><span class="tag">web</span><span class="tag dark">ai</span></div></div>
-    <a class="case" href="#">
-      <div class="pad"></div>
-      <div class="cap"><span class="t">AI-поиск по знаниям компании</span><span class="d">Один запрос — ответ из Slack, Notion, GitHub и Drive сразу.</span></div>
-    </a>
-  </article>
-
-  <article class="proj">
     <div class="meta"><span class="name">Atlas <span>/ дизайн и код</span></span><div class="tags"><span class="tag">web</span></div></div>
-    <a class="case" href="#">
-      <div class="pad"></div>
+    <a class="case wip-case" href="#" aria-label="Проект в разработке">
+      <div class="pad wip"><div class="wip-bg"></div><span class="wip-tag"><i></i>в разработке</span></div>
       <div class="cap"><span class="t">Атлас путешествий</span><span class="d">Поездки и города на 3D-глобусе, заметки и фото. Спроектировал и собрал сам.</span></div>
     </a>
   </article>
 
   <article class="proj">
     <div class="meta"><span class="name">Twist UI <span>/ концепты интеракций</span></span><div class="tags"><span class="tag">web</span><span class="tag">motion</span></div></div>
-    <a class="case" href="https://twist-ui.vercel.app/" target="_blank" rel="noopener">
+    <a class="case" href="https://twist-ui.vercel.app/" data-url="https://twist-ui.vercel.app/">
       <div class="pad reel-pad sk" id="reelPad"><div class="rs"></div><iframe id="reelFrame" name="reel" title="Живой компонент" tabindex="-1" aria-hidden="true" allow="clipboard-write"></iframe></div>
       <div class="cap"><span class="t">Компоненты, где состояние — в шрифте и движении</span><span class="d">Слайдер, таблица, OTP, диалоги и ещё семь компонентов на одной кривой анимации. Играют сами.</span></div>
-    </a>
-  </article>
-
-  <article class="proj">
-    <div class="meta"><span class="name">Bike Motion <span>/ моушн</span></span><div class="tags"><span class="tag">motion</span></div></div>
-    <a class="case" href="#" data-vid="https://player.vimeo.com/video/1234437731?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479">
-      <div class="pad vcase"><div class="vid sk"><iframe src="https://player.vimeo.com/video/1234437731?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Bike Motion" tabindex="-1"></iframe></div></div>
-      <div class="cap"><span class="t">Анимация интерфейса</span><span class="d">Моушн-концепт: как ощущается движение внутри продукта.</span></div>
     </a>
   </article>
 </section>
@@ -475,6 +473,8 @@ html.muted .tri i{background:var(--ink-5)}
   <div class="marquee" aria-label="Лента концептов">
     <div class="track" id="track">
       <a class="slide" href="#" data-vid="https://player.vimeo.com/video/1234436473?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479"><div class="box"><div class="vid sk"><iframe src="https://player.vimeo.com/video/1234436473?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Wardrobe tag" tabindex="-1"></iframe></div></div><span class="nm">Wardrobe Tag <span>/ drag</span></span></a>
+      <a class="slide" href="#" data-vid="https://player.vimeo.com/video/1234467270?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479" data-land="1"><div class="box"><div class="vid sk land"><iframe src="https://player.vimeo.com/video/1234467270?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Index Hero" tabindex="-1"></iframe></div></div><span class="nm">Index Hero <span>/ hero</span></span></a>
+      <a class="slide" href="#" data-vid="https://player.vimeo.com/video/1234437731?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479"><div class="box"><div class="vid sk"><iframe src="https://player.vimeo.com/video/1234437731?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1&badge=0&player_id=0&app_id=58479" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Bike Motion" tabindex="-1"></iframe></div></div><span class="nm">Bike Motion <span>/ motion</span></span></a>
       <a class="slide" href="#" data-img="assets/concepts/moss-widget-small.webp"><div class="box"><img src="assets/concepts/moss-widget-small.webp" alt="Виджет Moss Pet на экране iPhone" width="1420" height="1064" loading="lazy" decoding="async"></div><span class="nm">Moss Pet <span>/ widget</span></span></a>
       <a class="slide" href="#" data-img="assets/concepts/moss-widget-wide.webp"><div class="box"><img src="assets/concepts/moss-widget-wide.webp" alt="Широкий виджет Moss с показателями воды, света и настроения" width="1420" height="1064" loading="lazy" decoding="async"></div><span class="nm">Moss Pet <span>/ wide widget</span></span></a>
       <a class="slide" href="#" data-img="assets/concepts/moss-widget-phone.webp"><div class="box"><img src="assets/concepts/moss-widget-phone.webp" alt="Виджет Moss с кнопками Water, Light, Feed, Play" width="1420" height="1064" loading="lazy" decoding="async"></div><span class="nm">Moss Pet <span>/ interaction</span></span></a>
@@ -719,11 +719,11 @@ document.addEventListener('pointerover',e=>{ if(e.pointerType!=='mouse') return;
 (()=>{ const d=document.getElementById('cm'), st=document.getElementById('cmStage'), nm=document.getElementById('cmNm'); if(!d) return;
   let from=null;
   window.openConcept=a=>{ from=a; const vid=a.dataset.vid;
-    const img=a.dataset.img; st.className='cm-stage'+(vid?' sk':' wide'); st.innerHTML=vid?'<iframe src="'+vid+'" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Концепт"></iframe>':(img?'<img src="'+img+'" alt="">':'');
-    nm.innerHTML=(a.querySelector('.nm')||a.closest('.proj').querySelector('.meta .name')).innerHTML; if(vid&&window.watchVideo) watchVideo(st.firstChild,st);
+    const img=a.dataset.img, url=a.dataset.url, land=a.dataset.land; st.className='cm-stage'+(url?' wide sk':vid?' sk'+(land?' wide':''):' wide'); st.innerHTML=url?'<iframe src="'+url+'" title="Twist UI" allow="clipboard-write"></iframe>':vid?'<iframe src="'+vid+'" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" title="Концепт"></iframe>':(img?'<img src="'+img+'" alt="">':'');
+    nm.innerHTML=(a.querySelector('.nm')||a.closest('.proj').querySelector('.meta .name')).innerHTML; if(url) st.firstChild.addEventListener('load',()=>st.classList.add('ready')); else if(vid&&window.watchVideo) watchVideo(st.firstChild,st);
     d.classList.remove('out'); d.showModal(); document.documentElement.style.overflow='hidden'; };
   const close=()=>{ if(!d.open||d.classList.contains('out')) return; d.classList.add('out');
-    setTimeout(()=>{ d.close(); d.classList.remove('out'); st.innerHTML=''; document.documentElement.style.overflow=''; },220); };
+    setTimeout(()=>{ d.close(); d.classList.remove('out'); st.innerHTML=''; document.documentElement.style.overflow=''; },400); };
   d.querySelector('.cm-x').addEventListener('click',close);
   d.addEventListener('click',e=>{ if(!e.target.closest('.cm-stage,.cm-nm,.cm-x')) close(); });
   d.addEventListener('cancel',e=>{ e.preventDefault(); close(); });
@@ -913,7 +913,7 @@ window.dockBurst=(()=>{ let t; return type=>{ const tri=document.getElementById(
 document.querySelectorAll('.seg').forEach(el=>{ const v=+el.dataset.v; el.innerHTML=Array.from({length:10},(_,i)=>'<i'+(i<v?' data-on':'')+'></i>').join(''); });
 
 /* ---------- Кейсы: клик по видео открывает попап ---------- */
-document.querySelectorAll('.case[data-vid]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); window.openConcept&&window.openConcept(a); }));
+document.querySelectorAll('.case[data-vid],.case[data-url]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); window.openConcept&&window.openConcept(a); }));
 
 /* ---------- Twist UI: reel — компоненты играют сами, один за другим ----------
    Живые страницы компонентов подтягиваются с twist-ui.vercel.app (CORS открыт) и играются в iframe. */
